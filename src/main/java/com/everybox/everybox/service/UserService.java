@@ -4,6 +4,8 @@ import com.everybox.everybox.domain.User;
 import com.everybox.everybox.dto.LoginRequest;
 import com.everybox.everybox.dto.SignupRequest;
 import com.everybox.everybox.dto.UserResponseDto;
+import com.everybox.everybox.global.exception.CustomException;
+import com.everybox.everybox.global.exception.ErrorCode;
 import com.everybox.everybox.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,10 +20,10 @@ public class UserService {
 
     public UserResponseDto registerUser(SignupRequest request) {
         if (!request.getEmail().matches("^[\\w._%+-]+@[\\w.-]+\\.ac\\.kr$")) {
-            throw new IllegalArgumentException("대학생 이메일(@xxx.ac.kr)만 가입할 수 있습니다.");
+            throw new CustomException(ErrorCode.USER_EMAIL_INVALID);
         }
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("이미 가입된 이메일입니다.");
+            throw new CustomException(ErrorCode.USER_EMAIL_DUPLICATED);
         }
         User user = User.builder()
                 .email(request.getEmail())
@@ -34,9 +36,9 @@ public class UserService {
 
     public UserResponseDto login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         if (user.getPassword() == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ErrorCode.USER_PASSWORD_MISMATCH);
         }
         return UserResponseDto.from(user);
     }
