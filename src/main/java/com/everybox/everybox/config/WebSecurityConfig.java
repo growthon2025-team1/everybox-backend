@@ -35,10 +35,10 @@ public class WebSecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth2 -> oauth2
-                        .successHandler(new CustomOAuth2SuccessHandler(jwtUtil, userService))
-                        .userInfoEndpoint(userInfo -> userInfo.userService(new DefaultOAuth2UserService()))
-                )
+//                .oauth2Login(oauth2 -> oauth2
+//                        .successHandler(new CustomOAuth2SuccessHandler(jwtUtil, userService))
+//                        .userInfoEndpoint(userInfo -> userInfo.userService(new DefaultOAuth2UserService()))
+//                )
                 .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
