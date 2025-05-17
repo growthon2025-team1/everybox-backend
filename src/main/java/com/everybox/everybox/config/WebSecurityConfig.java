@@ -36,7 +36,9 @@ public class WebSecurityConfig {
                                 "/js/**",
                                 "/images/**",
                                 "/ws-chat/**",  // 허용
-                                "/**.html"
+                                "/**.html",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

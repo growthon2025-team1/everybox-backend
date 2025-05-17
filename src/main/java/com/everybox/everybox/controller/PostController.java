@@ -1,5 +1,6 @@
 package com.everybox.everybox.controller;
 
+import com.everybox.everybox.docs.PostDocs;
 import com.everybox.everybox.dto.PostCreateRequestDto;
 import com.everybox.everybox.dto.PostResponseDto;
 import com.everybox.everybox.dto.PostUpdateRequestDto;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/posts")
 @RequiredArgsConstructor
-public class PostController {
+public class PostController implements PostDocs {
 
     private final PostService postService;
 
