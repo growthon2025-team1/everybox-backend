@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ChatRoomRequestDto {
-    private Long receiverId;
-    private Long postId;
+public class UserUpdateRequestDto {
+    private String nickname;
+    private String password;
 }

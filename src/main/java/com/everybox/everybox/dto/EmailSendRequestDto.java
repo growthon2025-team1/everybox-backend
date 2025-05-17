@@ -5,7 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ChatMessageDto {
-    private Long senderId;
-    private String content;
+public class EmailSendRequestDto {
+    private String email;
 }

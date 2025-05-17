@@ -15,10 +15,16 @@ public class User {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    private String username;
 
     @Column(nullable = true)
     private String password;
 
     private String nickname;
+
+    @Column(nullable = false)
+    private Boolean isVerified = false;
+
+    @Column(unique = true, nullable = true)
+    private String universityEmail;
 }
