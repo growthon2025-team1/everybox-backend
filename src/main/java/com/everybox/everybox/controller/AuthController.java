@@ -1,5 +1,6 @@
 package com.everybox.everybox.controller;
 
+import com.everybox.everybox.docs.AuthDocs;
 import com.everybox.everybox.dto.UserLoginRequestDto;
 import com.everybox.everybox.dto.UserSignupRequestDto;
 import com.everybox.everybox.dto.UserResponseDto;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements AuthDocs {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;

@@ -1,5 +1,6 @@
 package com.everybox.everybox.controller;
 
+import com.everybox.everybox.docs.UserDocs;
 import com.everybox.everybox.dto.*;
 import com.everybox.everybox.security.JwtAuthentication;
 import com.everybox.everybox.service.UserService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserDocs {
 
     private final UserService userService;
 

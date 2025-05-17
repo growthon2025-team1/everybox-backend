@@ -1,5 +1,6 @@
 package com.everybox.everybox.controller;
 
+import com.everybox.everybox.docs.ChatDocs;
 import com.everybox.everybox.domain.ChatRoom;
 import com.everybox.everybox.dto.ChatRoomRequestDto;
 import com.everybox.everybox.dto.ChatRoomResponseDto;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class ChatController {
+public class ChatController implements ChatDocs {
     private final ChatService chatService;
 
     private Long getUserId(Authentication authentication) {
