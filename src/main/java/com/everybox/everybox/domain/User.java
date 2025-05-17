@@ -27,4 +27,19 @@ public class User {
 
     @Column(unique = true, nullable = true)
     private String universityEmail;
+
+    @Builder.Default
+    private Long experience = 0L;
+
+    @Builder.Default
+    private Long level = 1L;
+
+    public void gainExperience(long amount) {
+        this.experience += amount;
+
+        while (this.experience >= level * 100) {
+            this.experience %= 100;
+            this.level++;
+        }
+    }
 }
