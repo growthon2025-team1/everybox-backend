@@ -5,6 +5,8 @@ import com.everybox.everybox.dto.UserLoginRequestDto;
 import com.everybox.everybox.dto.UserSignupRequestDto;
 import com.everybox.everybox.dto.UserUpdateRequestDto;
 import com.everybox.everybox.dto.UserResponseDto;
+import com.everybox.everybox.global.exception.CustomException;
+import com.everybox.everybox.global.exception.ErrorCode;
 import com.everybox.everybox.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MailService mailService;
+
 
     public UserResponseDto registerUser(UserSignupRequestDto request) {
         // 중복 ID 체크 등 비즈니스 정책
@@ -64,7 +67,7 @@ public class UserService {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 아이디입니다."));
         if (user.getPassword() == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ErrorCode.USER_PASSWORD_MISMATCH);
         }
         return UserResponseDto.from(user);
     }
