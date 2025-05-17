@@ -27,4 +27,11 @@ public class User {
 
     @Column(unique = true, nullable = true)
     private String universityEmail;
+
+    @Builder.Default
+    private Long experience = 0L;
+
+    public void gainExperience(long amount) {
+        this.experience += amount;
+    }
 }
