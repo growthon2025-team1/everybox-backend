@@ -1,0 +1,62 @@
+name: everybox CI/CD
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  build-and-deploy:
+    name: 빌드 및 배포
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 가져오기
+        uses: actions/checkout@v2
+
+      - name: JDK 설정
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Gradle 실행 권한 부여
+        run: chmod +x gradlew
+
+      - name: Gradle 빌드 (테스트 제외)
+        run: ./gradlew clean build -x test
+
+      - name: DockerHub 로그인
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker 이미지 빌드 및 푸시
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/everybox-be .
+          docker push ${{ secrets.DOCKER_USERNAME }}/everybox-be
+
+      - name: deploy.sh 업로드
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USER }}
+          key: ${{ secrets.GCP_PRIVATE_KEY }}
+          source: deploy/deploy.sh
+          target: ~/everybox/
+
+      - name: docker-compose.yml 업로드
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USER }}
+          key: ${{ secrets.GCP_PRIVATE_KEY }}
+          source: deploy/docker-compose.yml
+          target: ~/everybox/
+
+      - name: 배포 스크립트 실행
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USER }}
+          key: ${{ secrets.GCP_PRIVATE_KEY }}
+          script: |
+            chmod +x ~/everybox/scripts/deploy.sh
+            ~/everybox/scripts/deploy.sh
