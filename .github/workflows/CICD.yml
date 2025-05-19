@@ -39,7 +39,7 @@ jobs:
           host: ${{ secrets.GCP_HOST }}
           username: ${{ secrets.GCP_USER }}
           key: ${{ secrets.GCP_PRIVATE_KEY }}
-          source: deploy/deploy.sh
+          source: scripts/deploy.sh
           target: ~/everybox/
 
       - name: docker-compose.yml 업로드
@@ -48,7 +48,7 @@ jobs:
           host: ${{ secrets.GCP_HOST }}
           username: ${{ secrets.GCP_USER }}
           key: ${{ secrets.GCP_PRIVATE_KEY }}
-          source: deploy/docker-compose.yml
+          source: docker-compose.yml
           target: ~/everybox/
 
       - name: 배포 스크립트 실행
