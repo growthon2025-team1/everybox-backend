@@ -21,11 +21,15 @@ public class UserService {
     private final MailService mailService;
 
 
-    public UserResponseDto registerUser(UserSignupRequestDto request) {
-        // 중복 ID 체크 등 비즈니스 정책
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new IllegalArgumentException("이미 가입된 아이디입니다.");
+    public boolean isValidId(String username) {
+        // 중복 ID 체크
+        if (userRepository.existsByUsername(username)) {
+            return false;
         }
+        return true;
+    }
+
+    public UserResponseDto registerUser(UserSignupRequestDto request) {
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))

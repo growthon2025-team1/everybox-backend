@@ -4,6 +4,7 @@ import com.everybox.everybox.docs.AuthDocs;
 import com.everybox.everybox.dto.UserLoginRequestDto;
 import com.everybox.everybox.dto.UserSignupRequestDto;
 import com.everybox.everybox.dto.UserResponseDto;
+import com.everybox.everybox.global.APIResponse;
 import com.everybox.everybox.service.UserService;
 import com.everybox.everybox.util.JwtUtil;
 import com.everybox.everybox.security.JwtAuthentication;
@@ -22,6 +23,13 @@ public class AuthController implements AuthDocs {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
+
+    @PostMapping("/check-id")
+    public APIResponse<String> checkId(@RequestParam String request) {
+        if (userService.isValidId(request))
+            return APIResponse.success("아이디 중복 X");
+        return APIResponse.fail("아이디 중복 O");
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@RequestBody UserSignupRequestDto request) {
