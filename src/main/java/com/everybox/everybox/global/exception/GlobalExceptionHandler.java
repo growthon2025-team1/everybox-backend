@@ -1,5 +1,6 @@
 package com.everybox.everybox.global.exception;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
 @Slf4j
-//@RestControllerAdvice
+@Hidden
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     // 서비스 로직 내의 예외
