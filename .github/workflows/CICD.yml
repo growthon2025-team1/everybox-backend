@@ -3,7 +3,7 @@ name: everybox CI/CD
 on:
   push:
     branches:
-      - deploy
+      - main
 
 jobs:
   build-and-deploy:
