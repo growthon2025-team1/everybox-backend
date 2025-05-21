@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
-@RestControllerAdvice
 @Slf4j
-public class GloablExcpetionHandler {
+//@RestControllerAdvice
+public class GlobalExceptionHandler {
 
     // 서비스 로직 내의 예외
     @ExceptionHandler(CustomException.class)
