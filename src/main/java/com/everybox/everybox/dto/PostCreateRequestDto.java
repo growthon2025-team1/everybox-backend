@@ -1,5 +1,6 @@
 package com.everybox.everybox.dto;
 
+import com.everybox.everybox.domain.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ public class PostCreateRequestDto {
     private String location;
     private Double lat;
     private Double lng;
-    private String category;
+    private Category category;
     private int quantity;
     private String imageUrl;
 }

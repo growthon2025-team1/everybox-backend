@@ -32,7 +32,7 @@ public class Post {
 
     private String imageUrl;
 
-    private String category;
+    private Category category;
 
     private LocalDateTime createdAt;
 

@@ -1,5 +1,6 @@
 package com.everybox.everybox.dto;
 
+import com.everybox.everybox.domain.Category;
 import com.everybox.everybox.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,7 @@ public class PostResponseDto {
     private String location;
     private Double lat;
     private Double lng;
-    private String category;
+    private Category category;
     private int quantity;
     private String imageUrl;
     private boolean isClosed;
