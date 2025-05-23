@@ -57,19 +57,19 @@ public class AuthController implements AuthDocs {
 
     @PostMapping("/kakao")
     public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestBody KakaoLoginRequestDto request) {
-        String kakaoId = request.getKakaoId();
         String email = request.getEmail();
         String nickname = request.getNickname();
 
         if (email == null || email.isBlank()) {
-            email = "kakao_" + kakaoId + "@kakao.com";
+            throw new IllegalArgumentException("카카오 계정의 이메일 정보가 없습니다.");
         }
 
-        UserResponseDto user = userService.findOrCreateKakaoUserDto(kakaoId, email, nickname);
+        // email = username
+        UserResponseDto user = userService.findOrCreateKakaoUserDto(email, nickname);
         String token = jwtUtil.generateToken(user.getId(), user.getUsername());
 
         return ResponseEntity.ok(Map.of(
-                "token", token,
+                "token", "Bearer " + token,
                 "userId", user.getId(),
                 "username", user.getUsername()
         ));
