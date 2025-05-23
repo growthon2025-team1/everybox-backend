@@ -53,13 +53,4 @@ public interface AuthDocs {
             @Parameter(hidden = true) Authentication authentication
     );
 
-    @Operation(
-            summary = "카카오 로그인 성공 콜백",
-            description = "카카오 로그인 성공 시 JWT 토큰을 발급하여 반환합니다.",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "토큰 발급 성공", content = @Content(schema = @Schema(implementation = Map.class))),
-                    @ApiResponse(responseCode = "401", description = "인증 실패")
-            }
-    )
-    ResponseEntity<Map<String, String>> kakaoLoginSuccess(OAuth2AuthenticationToken authentication);
 }
