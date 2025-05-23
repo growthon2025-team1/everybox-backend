@@ -62,7 +62,7 @@ public class UserService {
             user.setIsVerified(true);
             userRepository.save(user);
         } else {
-            throw new IllegalArgumentException("인증코드가 올바르지 않습니다.");
+            throw new IllegalArgumentException("인증코드가 올바르지 않거나 유효시간을 초과하였습니다.");
         }
     }
 
