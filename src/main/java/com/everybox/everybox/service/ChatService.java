@@ -7,6 +7,7 @@ import com.everybox.everybox.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public class ChatService {
                 .sender(userRepository.findById(senderId).orElseThrow())
                 .receiver(userRepository.findById(receiverId).orElseThrow())
                 .post(postRepository.findById(postId).orElseThrow())
+                .createdAt(LocalDateTime.now())
                 .build();
         return chatRoomRepository.save(chatRoom);
     }
