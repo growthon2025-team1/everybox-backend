@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -80,8 +82,23 @@ public class UserService {
         return userRepository.findById(id).map(UserResponseDto::from).orElse(null);
     }
 
-    public UserResponseDto findOrCreateKakaoUserDto(String email, String nickname) {
-        return UserResponseDto.from(findOrCreateKakaoUser(email, nickname));
+    public UserResponseDto findOrCreateKakaoUserDto(String kakaoId, String email, String nickname) {
+        String uniqueEmail = (email != null && !email.isBlank()) ? email : "kakao_" + kakaoId + "@kakao.com";
+
+        Optional<User> optionalUser = userRepository.findByUsername(uniqueEmail);
+
+        if (optionalUser.isPresent()) {
+            return UserResponseDto.from(optionalUser.get());
+        }
+
+        User newUser = User.builder()
+                .username(uniqueEmail)
+                .nickname(nickname)
+                .password(null)
+                .build();
+
+        userRepository.save(newUser);
+        return UserResponseDto.from(newUser);
     }
 
     public User findOrCreateKakaoUser(String username, String nickname) {

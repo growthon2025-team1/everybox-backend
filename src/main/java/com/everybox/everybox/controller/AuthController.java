@@ -1,6 +1,7 @@
 package com.everybox.everybox.controller;
 
 import com.everybox.everybox.docs.AuthDocs;
+import com.everybox.everybox.dto.KakaoLoginRequestDto;
 import com.everybox.everybox.dto.UserLoginRequestDto;
 import com.everybox.everybox.dto.UserSignupRequestDto;
 import com.everybox.everybox.dto.UserResponseDto;
@@ -55,23 +56,19 @@ public class AuthController implements AuthDocs {
         );
     }
 
-    @GetMapping("/kakao/success")
-    public ResponseEntity<Map<String, String>> kakaoLoginSuccess(OAuth2AuthenticationToken authentication) {
-        Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
-        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
-        String email = (String) kakaoAccount.get("email");
-        String nickname = (String) profile.get("nickname");
+    @PostMapping("/kakao")
+    public ResponseEntity<Map<String, String>> kakaoLogin(@RequestBody KakaoLoginRequestDto request) {
+        String kakaoId = request.getKakaoId();
+        String email = request.getEmail();
+        String nickname = request.getNickname();
 
-        // email(실제 username)이 null일 경우, 카카오 ID를 기반으로 대체값 생성
         if (email == null || email.isBlank()) {
-            Object idObj = attributes.get("id");
-            String kakaoId = (idObj != null) ? idObj.toString() : "unknown";
-            email = "kakao_" + kakaoId + "@kakao.com"; // ex) kakao_1234567890@kakao.com
+            email = "kakao_" + kakaoId + "@kakao.com";
         }
 
-        UserResponseDto user = userService.findOrCreateKakaoUserDto(email, nickname);
+        UserResponseDto user = userService.findOrCreateKakaoUserDto(kakaoId, email, nickname);
         String token = jwtUtil.generateToken(user.getId(), user.getUsername());
+
         return ResponseEntity.ok(Map.of("token", "Bearer " + token));
     }
 
