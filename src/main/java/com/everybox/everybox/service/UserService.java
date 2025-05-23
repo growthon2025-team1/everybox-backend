@@ -21,12 +21,11 @@ public class UserService {
     private final MailService mailService;
 
 
-    public boolean isValidId(String username) {
+    public void isValidId(String username) {
         // 중복 ID 체크
         if (userRepository.existsByUsername(username)) {
-            return false;
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
-        return true;
     }
 
     public UserResponseDto registerUser(UserSignupRequestDto request) {

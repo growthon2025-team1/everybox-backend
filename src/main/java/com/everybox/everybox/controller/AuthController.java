@@ -25,10 +25,9 @@ public class AuthController implements AuthDocs {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/check-id")
-    public APIResponse<String> checkId(@RequestParam String request) {
-        if (userService.isValidId(request))
-            return APIResponse.success("아이디 중복 X");
-        return APIResponse.fail("아이디 중복 O");
+    public ResponseEntity<Void> checkId(@RequestParam String request) {
+        userService.isValidId(request);
+        return ResponseEntity.ok(null);
     }
 
     @PostMapping("/signup")
