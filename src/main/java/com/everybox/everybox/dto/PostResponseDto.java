@@ -12,6 +12,9 @@ public class PostResponseDto {
     private String title;
     private String details;
     private String location;
+    private Double lat;
+    private Double lng;
+    private String category;
     private int quantity;
     private String imageUrl;
     private boolean isClosed;
@@ -26,6 +29,9 @@ public class PostResponseDto {
                 .title(post.getTitle())
                 .details(post.getDetails())
                 .location(post.getLocation())
+                .lat(post.getLat())
+                .lng(post.getLng())
+                .category(post.getCategory())
                 .quantity(post.getQuantity())
                 .imageUrl(post.getImageUrl())
                 .isClosed(post.isClosed())

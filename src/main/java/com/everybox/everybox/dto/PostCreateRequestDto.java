@@ -9,6 +9,9 @@ public class PostCreateRequestDto {
     private String title;
     private String details;
     private String location;
+    private Double lat;
+    private Double lng;
+    private String category;
     private int quantity;
     private String imageUrl;
 }

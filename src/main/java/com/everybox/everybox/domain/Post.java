@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -25,7 +26,13 @@ public class Post {
 
     private String location;
 
+    // 좌표
+    private Double lat;
+    private Double lng;
+
     private String imageUrl;
+
+    private String category;
 
     private LocalDateTime createdAt;
 

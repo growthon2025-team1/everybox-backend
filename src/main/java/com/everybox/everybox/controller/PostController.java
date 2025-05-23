@@ -26,14 +26,7 @@ public class PostController implements PostDocs {
             @RequestBody PostCreateRequestDto request,
             Authentication authentication) {
         Long userId = ((JwtAuthentication) authentication.getPrincipal()).getUserId();
-        return ResponseEntity.ok(PostResponseDto.from(postService.createPost(
-                request.getTitle(),
-                request.getDetails(),
-                request.getLocation(),
-                request.getQuantity(),
-                request.getImageUrl(),
-                userId
-        )));
+        return ResponseEntity.ok(PostResponseDto.from(postService.createPost(userId, request)));
     }
 
     @GetMapping

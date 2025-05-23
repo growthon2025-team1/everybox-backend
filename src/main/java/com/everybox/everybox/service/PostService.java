@@ -2,6 +2,7 @@ package com.everybox.everybox.service;
 
 import com.everybox.everybox.domain.Post;
 import com.everybox.everybox.domain.User;
+import com.everybox.everybox.dto.PostCreateRequestDto;
 import com.everybox.everybox.dto.PostUpdateRequestDto;
 import com.everybox.everybox.repository.PostRepository;
 import com.everybox.everybox.repository.UserRepository;
@@ -18,19 +19,22 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public Post createPost(String title, String details, String location, int quantity, String imageUrl, Long userId) {
+    public Post createPost(Long userId, PostCreateRequestDto postCreateRequestDto) {
         User giver = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         Post post = Post.builder()
-                .title(title)
-                .details(details)
-                .location(location)
-                .quantity(quantity)
-                .imageUrl(imageUrl)
+                .title(postCreateRequestDto.getTitle())
+                .details(postCreateRequestDto.getDetails())
+                .location(postCreateRequestDto.getLocation())
+                .lng(postCreateRequestDto.getLng())
+                .lat(postCreateRequestDto.getLat())
+                .quantity(postCreateRequestDto.getQuantity())
+                .imageUrl(postCreateRequestDto.getImageUrl())
                 .giver(giver)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
+                .category(postCreateRequestDto.getCategory())
                 .isClosed(false)
                 .build();
 
