@@ -3,6 +3,8 @@ package com.everybox.everybox.service;
 import com.everybox.everybox.domain.Post;
 import com.everybox.everybox.domain.User;
 import com.everybox.everybox.dto.PostUpdateRequestDto;
+import com.everybox.everybox.experience.ExpType;
+import com.everybox.everybox.experience.GainExp;
 import com.everybox.everybox.repository.PostRepository;
 import com.everybox.everybox.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+    @GainExp(ExpType.CREATE_POST)
     public Post createPost(String title, String details, String location, int quantity, String imageUrl, Long userId) {
         User giver = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));

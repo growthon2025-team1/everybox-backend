@@ -3,6 +3,8 @@ package com.everybox.everybox.service;
 import com.everybox.everybox.domain.*;
 import com.everybox.everybox.dto.MessageDto;
 import com.everybox.everybox.dto.MessageSendRequestDto;
+import com.everybox.everybox.experience.ExpType;
+import com.everybox.everybox.experience.GainExp;
 import com.everybox.everybox.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class ChatService {
     private final MessageRepository messageRepository;
 
     // 1:1 쌍당 1개만!
+    @GainExp(ExpType.START_CHAT)
     public ChatRoom createOrGetChatRoom(Long senderId, Long receiverId, Long postId) {
         ChatRoom existingRoom = chatRoomRepository.findBySenderIdAndReceiverIdAndPostId(senderId, receiverId, postId);
         if (existingRoom != null) return existingRoom;
