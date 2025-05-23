@@ -56,7 +56,7 @@ public class AuthController implements AuthDocs {
     }
 
     @PostMapping("/kakao")
-    public ResponseEntity<Map<String, String>> kakaoLogin(@RequestBody KakaoLoginRequestDto request) {
+    public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestBody KakaoLoginRequestDto request) {
         String kakaoId = request.getKakaoId();
         String email = request.getEmail();
         String nickname = request.getNickname();
@@ -68,7 +68,12 @@ public class AuthController implements AuthDocs {
         UserResponseDto user = userService.findOrCreateKakaoUserDto(kakaoId, email, nickname);
         String token = jwtUtil.generateToken(user.getId(), user.getUsername());
 
-        return ResponseEntity.ok(Map.of("token", "Bearer " + token));
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "userId", user.getId(),
+                "username", user.getUsername()
+        ));
     }
+
 
 }
