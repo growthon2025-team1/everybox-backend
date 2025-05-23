@@ -81,19 +81,22 @@ public class UserService {
         return userRepository.findById(id).map(UserResponseDto::from).orElse(null);
     }
 
-    public UserResponseDto findOrCreateKakaoUserDto(String kakaoId, String email, String nickname) {
-        String uniqueEmail = (email != null && !email.isBlank()) ? email : "kakao_" + kakaoId + "@kakao.com";
+    public UserResponseDto findOrCreateKakaoUserDto(String email, String nickname) {
 
-        Optional<User> optionalUser = userRepository.findByUsername(uniqueEmail);
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("카카오 이메일 정보가 없습니다.");
+        }
 
+        Optional<User> optionalUser = userRepository.findByUsername(email);
         if (optionalUser.isPresent()) {
             return UserResponseDto.from(optionalUser.get());
         }
 
         User newUser = User.builder()
-                .username(uniqueEmail)
-                .nickname(nickname)
-                .password(null)
+                .username(email)     // username은 email로
+                .nickname(nickname)  // 전달받은 nickname 그대로
+                .password(null)      // 소셜 로그인 사용자는 비밀번호 없음
+                .isVerified(false)   // 학교 인증 X
                 .build();
 
         userRepository.save(newUser);
