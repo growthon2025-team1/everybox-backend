@@ -15,6 +15,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Enumerated(EnumType.STRING)
     private Long id;
 
     private String title;
