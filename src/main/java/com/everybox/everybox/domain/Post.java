@@ -15,7 +15,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Enumerated(EnumType.STRING)
+
     private Long id;
 
     private String title;
@@ -32,7 +32,7 @@ public class Post {
     private Double lng;
 
     private String imageUrl;
-
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private LocalDateTime createdAt;
