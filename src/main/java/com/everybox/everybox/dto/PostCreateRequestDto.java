@@ -1,6 +1,7 @@
 package com.everybox.everybox.dto;
 
 import com.everybox.everybox.domain.Category;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,6 @@ public class PostCreateRequestDto {
     private Category category;
     private int quantity;
     private String imageUrl;
+    @JsonProperty("closed")
     private boolean isClosed;
 }

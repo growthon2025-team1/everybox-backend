@@ -2,6 +2,7 @@ package com.everybox.everybox.dto;
 
 import com.everybox.everybox.domain.Category;
 import com.everybox.everybox.domain.Post;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class PostResponseDto {
     private Category category;
     private int quantity;
     private String imageUrl;
+    @JsonProperty("closed")
     private boolean isClosed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
