@@ -15,4 +15,5 @@ public class PostCreateRequestDto {
     private Category category;
     private int quantity;
     private String imageUrl;
+    private boolean isClosed;
 }
